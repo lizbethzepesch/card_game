@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/game.js" defer></script>
+    <link rel="stylesheet" href="./css/game.css">
+    <title>Game Field</title>
+</head>
+<body>
+
+    <img src="assets/others/background.jpeg" class="background">
+
+<div class="field">
+    <div class="team1"><img src="./assets/teams/1.png" class="class"> 
+        <img src="assets/others/drop.png" class="hp">
+    <label class="hp1">30</label> </div>
+    
+    
+    <div class="team2"><img src="./assets/teams/2.png" class="class">
+        <img src="assets/others/drop.png" class="hp">
+
+    <label class="hp2">30</label> </div>
+</div>
+
+ <div class="opponents_cards">
+        <img src="assets/cards/lgbt.png" class="opponents">
+        <img src="assets/cards/lgbt.png" class="opponents">
+        <img src="assets/cards/lgbt.png" class="opponents">
+    </div>
+    <div class="opponents_cards2">
+        <img src="assets/cards/lgbt.png" class="opponents">
+        <img src="assets/cards/lgbt.png" class="opponents">
+        <img src="assets/cards/lgbt.png" class="opponents">
+    </div>
+     
+    <div class="cards">
+       <button class="card_button" onclick="dropACard(1)"><img src="assets/nazi/2.png" class="card card1"></button>
+       <button class="card_button" onclick="dropACard(2)"><img src="assets/nazi/6.png" class="card card2"></button>
+       <button class="card_button" onclick="dropACard(3)"><img src="assets/nazi/1.png" class="card card3"></button>
+    </div>
+
+    <div class="cards2">
+        <button class="card_button" onclick="dropACard(4)"><img src="assets/nazi/7.png" class="card card4"></button>
+        <button class="card_button" onclick="dropACard(5)"><img src="assets/nazi/8.png" class="card card5"></button>
+        <button class="card_button" onclick="dropACard(6)"><img src="assets/nazi/9.png" class="card card6"></button>
+     </div>
+
+    
+
+
+</body>
+</html>

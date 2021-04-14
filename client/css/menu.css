@@ -1,0 +1,71 @@
+h1{
+    color: #ffffff;
+    text-shadow: rgb(156, 123, 31) 0 0 5px;
+
+    font-size: 3em;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+p, input{
+    margin: 10px;
+    text-shadow: darkslateblue 0 0 5px;
+    color: #ffffff;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 200px;
+    
+}
+
+input{
+    border: none;
+    width: 30%;
+    border-bottom: #9493a0 1px solid;
+    
+}
+
+.button, .send{
+    border-radius: 30px;
+    font-size: 2em;
+    padding: 5px;
+    margin:5px;
+    width: 20%;
+    background-color: white;
+    border: none;
+    color: #9493a0;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', Verdana, sans-serif;
+}
+
+.send{
+    font-size: 1em;
+    width: 10%;
+}
+
+.send:hover, .button:hover{
+    background-color: #ffffff;
+    color: rgb(22, 22, 29);
+}
+html{
+    background: url('../assets/others/menu.jpeg') ;
+}
+
+
+input::placeholder{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', Verdana, sans-serif;
+    color: #423e5e;
+}
+input{
+    color: rgb(204, 204, 204);
+}
+
+.avatar{
+    width: 100px;
+    
+    border-radius: 100px;
+}

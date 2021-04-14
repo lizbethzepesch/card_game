@@ -1,0 +1,67 @@
+h1{
+    color: #ffffff;
+    text-shadow: rgb(255, 255, 255) 0 0 5px;
+    font-size: 4em;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+p, input{
+    margin: 10px;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 200px;
+}
+
+input{
+    border: none;
+    width: 30%;
+    border-bottom: #ffffff 1px solid;
+    background: none;
+
+}
+
+.button, .send{
+    border-radius: 30px;
+    font-size: 2em;
+    padding: 5px;
+    margin:5px;
+    width: 20%;
+    border: none;
+    color: #52515f;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+html{
+    background: url('../assets/others/menu.jpeg') ;
+
+}
+
+.send{
+    font-size: 1em;
+    width: 10%;
+}
+
+.send:hover, .button:hover{
+    background-color: #ffffff;
+    color: rgb(22, 22, 29);
+}
+
+
+input::placeholder{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #888888;
+}
+input{
+    color: rgb(255, 255, 255);
+}
+
+#signin, #login{
+    display: none;
+}
+
+
