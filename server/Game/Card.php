@@ -8,15 +8,28 @@ class Card
   private $cost;
   private $frontImg;
   private $backImg;
+  private $Player;
 
-  function __construct($id, $attack, $defence, $cost, $frontImg = null, $backImg = null)
+  function __construct($id, $attack, $defence, $cost, $Player, $frontImg = null, $backImg = null)
   {
     $this->id = $id;
     $this->attack = $attack;
     $this->defence = $defence;
     $this->cost = $cost;
+    $this->Player = $Player;
     $this->frontImg = $frontImg;
     $this->backImg = $backImg;
+    $this->isAlive = 1;
+  }
+  public function getCardData(){
+    return array(
+      "id" => $this->id,
+      "attack" => $this->attack,
+      "defence" => $this->defence,
+      "cost" => $this->cost,
+      "frontImg" => $this->frontImg,
+      "backImg" => $this->backImg
+    );
   }
   public function getId(){
     return $this->id;
@@ -30,20 +43,33 @@ class Card
   public function getCost(){
     return $this->cost;
   }
-  public function getFrontImg(){
+  public function getfrontImg(){
     return $this->frontImg;
   }
-  public function getBackImg(){
-    return $this->backImg;
-  }
+ 
 
   public function setDefence($defence){
     $this->defence = $defence;
   }
-  public function setFrontImg($frontImg){
+  public function setfrontImg($frontImg){
     $this->frontImg = $frontImg;
   }
-  public function setBackImg($backImg){
-    $this->backImg = $backImg;
+  public function Damage($Damage)
+  {
+    $this->defence -= $Damage;
+    if ($this->getDefence()<= 0)
+    {
+      $this->Deth();
+    }
   }
+  public function Attack($DamgeCharacter)
+  {
+    $DamageCharacter->Damage(getAttack());
+  }
+  public function Deth()
+  {
+    $this->Player->RemoveCard($this);
+  }
+
+
 }

@@ -3,6 +3,7 @@
  * Класс WebSocket сервера
  */
 require ("Database/DatabaseConnection.php");
+require ("Game/Game.php");
 class WebSocketServer {
   
     /**
@@ -54,6 +55,8 @@ class WebSocketServer {
 
     private $db_connect;
 
+    private $Players = [];
+    private $Game;
     public function __construct($ip = '127.0.0.1', $port = 7777) {
         $this->ip = $ip;
         $this->port = $port;
@@ -215,7 +218,6 @@ class WebSocketServer {
         }
 
     }
-
     private function RequestController($data, $socketKey){
         $dataArr = json_decode($data, true);
         switch($dataArr['id']){
@@ -227,6 +229,7 @@ class WebSocketServer {
                     $this->connects[$username] = $this->connects[$socketKey];
                     unset($this->connects[$socketKey]);
                     print_r($response);
+                    $this->Players[$username] = new Player($response['id'], $this->connects[$username], $username, $response['hero'],$response['img']);
                     self::response($this->connects[$username],json_encode($response));
                 }else
                 {
@@ -240,6 +243,7 @@ class WebSocketServer {
                 {
                     $this->connects[$dataArr['username']] = $this->connects[$socketKey];
                     unset($this->connects[$socketKey]);
+                    $this->Players[$dataArr['username']] = new Player($response['id'], $this->connects[$dataArr['username']], $dataArr['username'], $response['hero'],$response['img']);
                     self::response($this->connects[$dataArr['username']], "Register success!");
                 }
                 else{
@@ -248,13 +252,38 @@ class WebSocketServer {
                 break;
             case 3://usersList(id=3)
                 $response = array_keys($this->connects);
-                if (($key = array_search($socketKey, $response)) !== false) {
+                array_shift($response);
+                $key = array_search($socketKey, $response);
+                
+                if($key)
                     unset($response[$key]);
-                }
+                
+                print_r($response);
                 self::response($this->connects[$socketKey], json_encode($response));
                 break;
             case 4://inviteToGame(id = 4, secondPlayer)
-                self::response($this->connects[$dataArr['secondPlayer']], "User $socketKey invate YOU to play with him!");
+                $responseArr = [];
+                //self::response($this->connects[$dataArr['secondPlayer']], "User $socketKey invate YOU to play with him!");
+                $this->Game = new Game($this->Players[$socketKey], $this->Players[$dataArr['secondPlayer']]);
+                $FirstcardArr = $this->db_connect->getUserDeck($socketKey);
+                foreach ($FirstcardArr as $key => $value) {//id, $attack, $defence, $cost, $Player, $frontImg = null, $backImg = null
+                    $card = new Card($value['id_card'],$value['attack'], $value['defence'], $value['cost'],$this->Game->getPlayerA(), $value['front_img'],$value['back_img']);
+                    
+                    $this->Game->getPlayerA()->addCardToDeck($card);
+
+                    
+                }
+                $SecondcardArr = $this->db_connect->getUserDeck($dataArr['secondPlayer']);
+                foreach ($SecondcardArr as $key => $value) {//id, $attack, $defence, $cost, $Player, $frontImg = null, $backImg = null
+                    $card = new Card($value['id_card'],$value['attack'], $value['defence'], $value['cost'],$this->Game->getPlayerB(), $value['front_img'],$value['back_img']);
+                    $this->Game->getPlayerB()->addCardToDeck($card);
+                }
+                $this->Game->startGame();
+                $responseArr["id_doing"] = 1;
+                $responseArr["PlayerA"] = $this->Game->getPlayerA()->getUserData();
+                $responseArr["PlayerB"] = $this->Game->getPlayerB()->getUserData();
+                self::response($this->Game->getPlayerB()->getSocket(), json_encode($responseArr));
+                self::response($this->Game->getPlayerA()->getSocket(), json_encode($responseArr));
                 break;
             case 5://invited user response(id = 5, status(1 - yes, 0 - no), firstPlayer)
                 if($dataArr['status'] == 1){
@@ -265,7 +294,15 @@ class WebSocketServer {
                     self::response($this->connects[$dataArr['firstPlayer'] ], "User $socketKey rejected your invite");
                 }
                 break;
+            case 6://Drop card (id=6, id_card)
 
+                break;
+            case 7://Attack (id = 7, first_card, second_card(user))
+    
+                break;
+            case 8://leading( id = 8)
+    
+                break;
         
         }
     }

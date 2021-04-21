@@ -1,16 +1,18 @@
 <?php
 class Player
 {
-  private $id;
-  private $socket;
-  private $username;
-  private $hero;
-  private $cardHand = [];
-  private $userDeck =[];
-  private $health;
-  private $mana;
-  private $img;
-  function __construct($id, $socket = NULL, $username, $hero = NULL, $cardHand = NULL, $img = NULL)
+  public $id;
+  public $socket;
+  public $username;
+  public $hero;
+  public  $yourTurn;
+  public $cardHand = [];
+  public $userDeck =[];
+  public $cardInField = [];
+  public $health;
+  public $mana;
+  public $img;
+  function __construct($id, $socket = NULL, $username, $hero = NULL, $img = NULL,$cardHand =[])
   {
     $this->id = $id;
     $this->socket = $socket;
@@ -20,6 +22,41 @@ class Player
     $this->img = $img;
     $this->health = 20;
     $this->mana = 1;
+  }
+  public function UserDeckToArray(){
+    $arr =[];
+    foreach($this->userDeck as $value){
+      array_push($arr,$value->getCardData());
+    }
+    return $arr;
+  }
+  public function CardHandToArray(){
+    $arr =[];
+    foreach($this->cardHand as $value){
+      array_push($arr,$value->getCardData());
+    }
+    return $arr;
+  }
+  public function CardInFieldToArray(){
+    $arr =[];
+    foreach($this->cardInField as $value){
+      array_push($arr,$value->getCardData());
+    }
+    return $arr;
+  }
+  public function getUserData(){
+    return array(
+      "id" => $this->id,
+      "username" => $this->username,
+      "hero" => $this->hero,
+      "img" => $this->img,
+      "mana" => $this->mana,
+      "health" => $this->health,
+      "yourTurn" => $this->yourTurn,
+      "cardHand" => self::CardHandToArray(),
+      "UserDeck" => self::UserDeckToArray(),
+      "cardInField" => self::CardInFieldToArray()
+    );
   }
   public function getId(){
     return $this->id;
@@ -32,6 +69,9 @@ class Player
   }
   public function getHero(){
     return $this->hero;
+  }
+  public function getYourTurn(){
+    return $this->yourTurn;
   }
   public function getCardHand(){
     return $this->cardHand;
@@ -63,9 +103,6 @@ class Player
   public function setUserDeck($userDeck){
     return $this->userDeck = $userDeck;
   }
-  public function setSocket($socket){
-    return $this->socket = $socket;
-  }
   public function setImg($img){
     return $this->img = $img;
   }
@@ -73,4 +110,34 @@ class Player
     return $this->mana = $mana;
   }
   public function addMana(){$this->mana++;}
+
+  public function getCardInField(){
+    return $this->cardInField;
+  }
+
+  public function RemoveCard($Card)
+  {
+    $key = array_search($Card, $this->cardInField);
+    unset($this->cardInField[$key]);
+  }
+
+  public function AddCardToField($Card)
+  {
+    $this->cardInField[] = $Card;
+    $key = array_search($Card, $this->cardHand);
+    unset($this->cardHand[$key]);
+  }
+
+  public function getCardFromDeck()
+  {
+    $this->cardHand[] = array_shift($this->userDeck);
+  }
+
+  public function shakeCard()
+  {
+    shuffle($this->userDeck); 
+  }
+  public function addCardToDeck($card){
+    array_push($this->userDeck,$card);
+  }
 }

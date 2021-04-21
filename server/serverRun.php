@@ -5,7 +5,7 @@ ob_implicit_flush();
 
 require ('WebSocketServer.php');
 
-$server = new WebSocketServer('127.0.0.1', 5555);
+$server = new WebSocketServer('127.0.0.1', 3434);
 // максимальное время работы 100 секунд, выводить сообщения в консоль
 $server->settings(60, true);
 

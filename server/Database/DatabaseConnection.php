@@ -91,27 +91,16 @@ class DatabaseConnection
               INNER JOIN hero_class ON cards.id_class = hero_class.id_class
               INNER JOIN users ON cards.id_class = users.id_class
               WHERE users.username = '$username'");
-      $row = $query->fetch(PDO::FETCH_OBJ);
+      
+      return $query->fetchAll(PDO::FETCH_ASSOC);
 
-        return  array('id_card' => $row->id_card,
-                    'attack' => $row->attack,
-                    'defence' => $row->defence,
-                    'cost' => $row->$cost,
-                    'front_img' => $row->front_img,
-                    'back_img' => $row->back_img);
     } catch (\Exception $e) {
       echo $e->getMessage();
     }
   }
 }
-
-
-/*$test = new DatabaseConnection();
+//$test = new DatabaseConnection();
 //echo $test->getConnectionStatus();
-$temp = $test->registerUser("test1", "qwertty", 1);
-if($temp === true){
-  $array = $test->loginUser("test1", "qwertty");
-  print_r($array);
-}*/
-
+//$temp = $test->registerUser("test1", "qwertty", 1);
+//print_r($test->getUserDeck("test1"));
 
